@@ -1,0 +1,76 @@
+<div class="container-fluid">
+  <br>
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Category</button>
+  <br><br>
+  <div class="row">
+    <div class="col-md-4">
+        <input class="form-control mr-sm-2" type="text" placeholder="Search Category" aria-label="Search" [(ngModel)]="search1">
+    </div>
+  </div>
+  <br>
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                            <div class="input-group-addon" style="width: 2.6rem"></div>
+                            <input type="text" name="name" class="form-control" id="name" [(ngModel)]="cname"
+                                   placeholder="Enter Category" required autofocus>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-info" style="position: relative;" (click)="insertcategory()" > +Add </button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+     
+    </div>
+  </div>
+  <!-- //////////////////table//////////////////////////// -->
+  <table class="table table-dark table-responsive">
+      <thead>
+        <tr>
+          <th>SN</th>
+          <th scope="col">Catid</th>
+          <th scope="col" (click)="sortFun('catname')">Category Name
+            <span class="glyphicon sort-icon" [ngClass]="{'fa fa-arrow-circle-down':!ord,'fa fa-arrow-circle-up':ord}"></span>
+          </th>
+          <th scope="col">Status</th>
+          <th scope="col">Oparations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cat of cat_record | filter : search1 |orderBy:sortkey:ord | paginate: { itemsPerPage: 3, currentPage: pageno } ; let i='index'">
+          <td *ngIf="cat._id != glob_id">{{i+1}}</td>
+          <td scope="row" *ngIf="cat._id != glob_id; else elseTemp">{{cat._id}}</td>
+          <td *ngIf="cat._id != glob_id">{{cat.catname}}</td>
+          <td *ngIf="cat._id != glob_id">{{cat.active}}</td>
+          <td *ngIf="cat._id != glob_id">
+            <input type="button" value="Edit" class="btn btn-info" (click)="editFun(cat)"> &nbsp;&nbsp;
+            <input type="button" value="Delete"  class="btn btn-danger"  (click)="deleteFun(cat._id)">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls (pageChange)="pageno = $event"></pagination-controls>
+    <ng-template #elseTemp>
+      <td></td>
+      <td>{{glob_id}}</td>
+      <td><input type="text" class="form-control" [(ngModel)]="cname1"></td>
+      <td></td>
+      <td>
+        <input type="button" value="Save" class="btn btn-success" (click)="saveFun()" > &nbsp;
+        <input type="button" value="Cancel" class="btn btn-warning" (click)="glob_id=0">
+      </td>
+    </ng-template> 
+</div>

@@ -1,0 +1,118 @@
+<div class="container-fluid">
+  <br>
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">SS_Category</button>
+    <br><br>
+    <div class="row">
+      <div class="col-md-4">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search Sub Sub Category" aria-label="Search" [(ngModel)]="search1">
+      </div>
+    </div>
+    <br>
+  <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            
+          </div>
+          <div class="modal-body">
+              <div class="row">
+                  <div class="col-md-10">
+                      <div class="form-group">
+                          <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                              <div class="input-group-addon" style="width: 2.6rem"></div>
+                              <select name="name" class="form-control" id="name" [(ngModel)]="cid" required autofocus (change)="subcat()">
+                                <option value="">--Select Category--</option>
+                                <option *ngFor="let cat of catdata" value="{{cat._id}}">{{cat.catname}}</option>
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-10">
+                      <div class="form-group">
+                          <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                              <div class="input-group-addon" style="width: 2.6rem"></div>
+                              <select name="name" class="form-control" id="name" [(ngModel)]="sid" required autofocus >
+                                <option value="">--Select Sub Category--</option>
+                                <option *ngFor="let scat of sub_record" value="{{scat._id}}">{{scat.scatname}}</option>
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-10">
+                      <div class="form-group">
+                          <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                              <div class="input-group-addon" style="width: 2.6rem"></div>
+                              <input type="text" name="name" class="form-control" id="name" [(ngModel)]="sscname"
+                                     placeholder="Enter Sub_Category" required autofocus>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal"  (click)="ins_subsubcategory()">+Add</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    <table class="table table-dark table-responsive">
+        <thead>
+          <tr>
+            <th>SN</th>
+            <th>SSID</th>
+            <th scope="col">Category Name</th>
+            <th scope="col" (click)="subSorting('scatname')">Sub Category Name
+              <span class="glyphicon sort-icon" [ngClass]="{'fa fa-arrow-circle-down':!ord,'fa fa-arrow-circle-up':ord}"></span>
+            </th>
+            <th>sub subcat Name</th>
+            <th scope="col">Status</th>
+            <th scope="col">Oparations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let sscat of show_all_ssc | filter : search1 | paginate :{itemsPerPage: 4, currentPage: pno} | orderBy:key:ord ; let i='index'">
+            <td >{{i+1}}</td>
+            <td scope="row" *ngIf= "sscat._id != glob_id; else temp">{{sscat._id}}</td>
+            <td *ngIf= "sscat._id != glob_id">{{sscat.catname}}</td>
+            <td *ngIf= "sscat._id != glob_id">{{sscat.scatname}}</td>
+            <td *ngIf= "sscat._id != glob_id">{{sscat.sscatname}}</td>
+            <td *ngIf= "sscat._id != glob_id">{{sscat.active}}</td>
+            <td *ngIf= "sscat._id != glob_id">
+              <input type="button" value="Edit" class="btn btn-info" (click)="editFun(sscat)"> &nbsp;&nbsp;
+              <input type="button" value="Delete"  class="btn btn-danger"  (click)="deleteFun(sscat._id)">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls (pageChange)="pno=$event"></pagination-controls>
+      <ng-template #temp>
+        <td>{{glob_id}}</td>
+        <td>
+          <select [(ngModel)]="cid1" class="form-control" (change)="updsubcat()">
+            <option *ngFor="let cat of catdata" value="{{cat._id}}">{{cat.catname}}</option>
+          </select>
+        </td>
+        <td>
+          <select [(ngModel)]="sid1" class="form-control">
+            <option *ngFor="let scat of subrec" value="{{scat._id}}">{{scat.scatname}}</option>
+          </select>
+        </td>
+        <td><input class="form-control" [(ngModel)]="sscname1"></td>
+        <td>{{active}}</td>
+        <td>
+            <input type="button" value="Save" class="btn btn-success" (click)="saveFun()"> &nbsp;&nbsp;
+            <input type="button" value="Cancel"  class="btn btn-warning"  (click)="glob_id=0">
+        </td>
+      </ng-template>
+    
+    
+  </div>
+  
+  

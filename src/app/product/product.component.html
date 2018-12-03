@@ -1,0 +1,270 @@
+<div class="container-fluid">
+    <br>
+      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Products</button>
+      <br><br>
+      <div class="row">
+        <div class="col-md-4">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search Sub Sub Category" aria-label="Search" [(ngModel)]="search1">
+        </div>
+      </div>
+      <br>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              
+            </div>
+            <form #frm1="ngForm" name="f1">
+            <div class="modal-body">    
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                                <div class="input-group-addon" style="width: 2.6rem"></div>
+                                <select name="name1" class="form-control" id="name1" [(ngModel)]="cid" autofocus (change)="subcat()" #vld1="ngModel" required>
+                                  <option value="">--Select Category--</option>
+                                  <option *ngFor="let cat of catdata" value="{{cat._id}}">{{cat.catname}}</option>
+                                </select> &nbsp;&nbsp;&nbsp;
+                                <span *ngIf="vld1.errors && vld1.errors.required" style="color: red">{{msg1}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                                <div class="input-group-addon" style="width: 2.6rem"></div>
+                                <select name="name2" class="form-control" id="name2" [(ngModel)]="sid" #vld2="ngModel" required autofocus (change)="subsubCahnge()">
+                                  <option value="">--Select Sub Category--</option>
+                                  <option *ngFor="let scat of sub_record" value="{{scat._id}}">{{scat.scatname}}</option>
+                                </select>&nbsp;&nbsp;&nbsp;
+                                <span *ngIf="vld2.errors && vld2.errors.required" style="color: red">{{msg2}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                                <div class="input-group-addon" style="width: 2.6rem"></div>
+                                <select name="name3" class="form-control" id="name3" [(ngModel)]="ssid" #vld3="ngModel" required autofocus (change)="brandChange()">
+                                  <option value="">--Select Sub sub Category--</option>
+                                  <option *ngFor="let sscat of ssub_record" value="{{sscat._id}}">{{sscat.sscatname}}</option>
+                                </select>&nbsp;&nbsp;&nbsp;
+                                <span *ngIf="vld3.errors && vld3.errors.required" style="color: red">{{msg3}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                                <div class="input-group-addon" style="width: 2.6rem"></div>
+                                <select name="name4" class="form-control" id="name4" [(ngModel)]="bid" #vld4="ngModel" required autofocus >
+                                  <option value="">--Select Sub sub Category--</option>
+                                  <option *ngFor="let brd of brand_rec" value="{{brd._id}}">{{brd.brand_name}}</option>
+                                </select>&nbsp;&nbsp;&nbsp;
+                                <span *ngIf="vld4.errors && vld4.errors.required" style="color: red">{{msg4}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                                <div class="input-group-addon" style="width: 2.6rem"></div>
+                                <input type="text" name="name5" class="form-control" id="name5" [(ngModel)]="pname"
+                                       placeholder="Enter Product Name" #vld5="ngModel" required autofocus>
+                                &nbsp;&nbsp;&nbsp;
+                                <span *ngIf="vld5.errors && vld5.errors.required" style="color: red">{{msg5}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                                <div class="input-group-addon" style="width: 2.6rem"></div>
+                                <input type="text" name="name6" class="form-control" id="name6" [(ngModel)]="prating"
+                                       placeholder="Enter Product Rating" #vld6="ngModel" required autofocus>
+                                &nbsp;&nbsp;&nbsp;
+                                <span *ngIf="vld6.errors && vld6.errors.required" style="color: red">{{msg6}}</span>       
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                                <div class="input-group-addon" style="width: 2.6rem"></div>
+                                <input [(colorPicker)]="pcolor" name="name7" class="form-control" id="name7" [(ngModel)]="pcolor"
+                                       placeholder="Enter Product Color" #vld7="ngModel" required autofocus>
+                                &nbsp;&nbsp;&nbsp;
+                                <span *ngIf="vld7.errors && vld7.errors.required" style="color: red">{{msg7}}</span>       
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                                <div class="input-group-addon" style="width: 2.6rem"></div>
+                                <input type="text" name="name8" class="form-control" id="name8" [(ngModel)]="pprice"
+                                       placeholder="Enter Product Price" #vld8="ngModel" required autofocus> &nbsp;&nbsp;&nbsp;
+                                       <span *ngIf="vld8.errors && vld8.errors.required" style="color: red">{{msg8}}</span>       
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                                    <div class="input-group-addon" style="width: 2.6rem"></div>
+                                    <input type="text" name="name8" class="form-control" id="nameq" [(ngModel)]="quantity"
+                                           placeholder="Enter Product Quantity" #vldq="ngModel" required autofocus> &nbsp;&nbsp;&nbsp;
+                                           <span *ngIf="vldq.errors && vld8.errors.required" style="color: red">{{msg9}}</span>       
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                                    <div class="input-group-addon" style="width: 2.6rem"></div>
+                                    <input type="text" name="n10" class="form-control" id="n10" [(ngModel)]="pdesc"
+                                           placeholder="Enter Product description" #vld10="ngModel" required autofocus> &nbsp;&nbsp;&nbsp;
+                                       <span *ngIf="vld10.errors && vld10.errors.required" style="color: red">{{msg10}}</span>       
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                                <div class="input-group-addon" style="width: 2.6rem"></div>
+                                    <form method="POST" action="http://localhost:4444/img_service" enctype="multipart/form-data" id="frm1">
+                                        <input type="file" name="f1" class="form-control" autofocus>
+                                    </form>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal"  (click)="insProducts(frm1)">+Add</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+            </form>
+          </div>
+          
+        </div>
+      </div>
+      <table class="table table-dark table-responsive">
+          <thead>
+            <tr>
+              <th>SN</th>
+              <th>Pro Id</th>
+              <th>Image</th>
+              <th scope="col">Category Name</th>
+              <th scope="col">Sub Category Name</th>
+              <th>sub subcat Name</th>
+              <th>Brand Name</th>
+              <th  (click)="proSorting('product_name')">Product Name
+                   <span class="glyphicon sort-icon" [ngClass]="{'fa fa-arrow-circle-down':!ord,'fa fa-arrow-circle-up':ord}"></span>
+              </th>
+              <th>Rating</th>
+              <th>Color</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>desc</th>
+              <th scope="col">Status</th>
+              <th scope="col">Oparations</th>
+              <th>Offer</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pro of pro_record | filter : search1 | paginate :{itemsPerPage: 4, currentPage: pno} | orderBy:key:ord ; let i='index'">
+              <td >{{i+1}}</td>
+              <td scope="row" *ngIf= "pro._id != glob_id; else temp">{{pro._id}}</td>
+              <td *ngIf= "pro._id != glob_id">
+                  <img src="http://localhost:4200/assets/Image/{{pro.product_image}}" style="height: 20px; width: 30px">
+                </td>
+              <td *ngIf= "pro._id != glob_id">{{pro.catname}}</td>
+              <td *ngIf= "pro._id != glob_id">{{pro.scatname}}</td>
+              <td *ngIf= "pro._id != glob_id">{{pro.sscatname}}</td>
+              <td *ngIf= "pro._id != glob_id">{{pro.brand_name}}</td>
+              <td *ngIf= "pro._id != glob_id">{{pro.product_name}}</td>
+              <td *ngIf= "pro._id != glob_id">{{pro.product_rating}}</td>
+              <td *ngIf= "pro._id != glob_id">{{pro.product_color}}</td>
+              <td *ngIf= "pro._id != glob_id">{{pro.product_price}}</td>
+              <td *ngIf= "pro._id != glob_id">{{pro.product_quantity}}</td>
+              <td *ngIf= "pro._id != glob_id">{{pro.description}}</td>
+              <td *ngIf= "pro._id != glob_id">{{pro.active}}</td>
+              <td *ngIf= "pro._id != glob_id">
+                <input type="button" value="Edit" class="btn btn-info" (click)="editFun(pro)"> &nbsp;&nbsp;
+                <input type="button" value="Delete"  class="btn btn-danger"  (click)="deleteFun(pro._id)">
+              </td>
+              <td><input type="button" value="Offer" class="btn btn-success" (click)="offerFun(pro._id)"></td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <pagination-controls (pageChange)="pno=$event"></pagination-controls>
+
+
+        <ng-template #temp>
+          <td>{{glob_id}}</td>
+          <td></td>
+          <td>
+            <select [(ngModel)]="cid1" class="form-control" (change)="updsubcat()">
+              <option *ngFor="let cat of catdata" value="{{cat._id}}">{{cat.catname}}</option>
+            </select>
+          </td>
+          <td>
+            <select [(ngModel)]="sid1" class="form-control" (change)="updssubcat()">
+              <option *ngFor="let scat of subrec" value="{{scat._id}}">{{scat.scatname}}</option>
+            </select>
+          </td>
+          <td>
+            <select [(ngModel)]="ssid1" class="form-control"(change)="brandChangeFun()">
+              <option *ngFor="let sscat of ssubrec" value="{{sscat._id}}">{{sscat.sscatname}}</option>
+            </select>
+          </td>
+          <td>
+            <select [(ngModel)]="bid1" class="form-control">
+              <option *ngFor="let brand of rebrand_rec" value="{{brand._id}}">{{brand.brand_name}}</option>
+            </select>
+          </td>
+          <td><input class="form-control" [(ngModel)]="pname1"></td>
+          <td><input class="form-control" [(ngModel)]="prating1"></td>
+          <td><input class="form-control" [(ngModel)]="pcolor1"></td>
+          <td><input class="form-control" [(ngModel)]="pprice1"></td>
+          <td><input class="form-control" [(ngModel)]="quantity1"></td>
+          <td><input class="form-control" [(ngModel)]="pdesc1"></td>
+          <td>{{active}}</td>
+          <td>
+              <input type="button" value="Save" class="btn btn-success" (click)="saveFun()"> &nbsp;&nbsp;
+              <input type="button" value="Cancel"  class="btn btn-warning"  (click)="glob_id=0">
+          </td>
+          <td>
+                <input type="text" placeholder="Add Offer" name="prooff" [(ngModel)]="poffer" class="form-control" required>
+                <input type="button" class="btn btn-success" value="+Add" (click)="saveOfferFun()">
+                <input type="button" value="cancel" class="btn btn-primary" (click)="glob_id=0">
+          </td>
+        </ng-template>
+      
+      
+    </div>
+    
+    

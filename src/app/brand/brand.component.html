@@ -1,0 +1,140 @@
+<div class="container-fluid">
+    <br>
+      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Brand</button>
+      <br><br>
+      <div class="row">
+        <div class="col-md-4">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search Sub Sub Category" aria-label="Search" [(ngModel)]="search1">
+        </div>
+      </div>
+      <br>
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                                <div class="input-group-addon" style="width: 2.6rem"></div>
+                                <select name="name" class="form-control" id="name" [(ngModel)]="cid" required autofocus (change)="subcat()">
+                                  <option value="">--Select Category--</option>
+                                  <option *ngFor="let cat of catdata" value="{{cat._id}}">{{cat.catname}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                                <div class="input-group-addon" style="width: 2.6rem"></div>
+                                <select name="name" class="form-control" id="name" [(ngModel)]="sid" required autofocus (change)="subsubCahnge()">
+                                  <option value="">--Select Sub Category--</option>
+                                  <option *ngFor="let scat of sub_record" value="{{scat._id}}">{{scat.scatname}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                                <div class="input-group-addon" style="width: 2.6rem"></div>
+                                <select name="name" class="form-control" id="name" [(ngModel)]="ssid" required autofocus >
+                                  <option value="">--Select Sub sub Category--</option>
+                                  <option *ngFor="let sscat of ssub_record" value="{{sscat._id}}">{{sscat.sscatname}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="form-group">
+                            <div class="input-group mb-12 mr-sm-12 mb-sm-12">
+                                <div class="input-group-addon" style="width: 2.6rem"></div>
+                                <input type="text" name="name" class="form-control" id="name" [(ngModel)]="bname"
+                                       placeholder="Enter Brand Name" required autofocus>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal"  (click)="insBrand()">+Add</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <table class="table table-dark table-responsive">
+          <thead>
+            <tr>
+              <th>SN</th>
+              <th>Brd Id</th>
+              <th scope="col">Category Name</th>
+              <th scope="col">Sub Category Name
+                
+              </th>
+              <th>sub subcat Name</th>
+              <th (click)="brandSorting('brand_name')">Brand Name
+                  <span class="glyphicon sort-icon" [ngClass]="{'fa fa-arrow-circle-down':!ord,'fa fa-arrow-circle-up':ord}"></span>
+              </th>
+              <th scope="col">Status</th>
+              <th scope="col">Oparations</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let brd of show_allrec | filter : search1 | paginate :{itemsPerPage: 4, currentPage: pno} | orderBy:key:ord ; let i='index'">
+              <td >{{i+1}}</td>
+              <td scope="row" *ngIf= "brd._id != glob_id; else temp">{{brd._id}}</td>
+              <td *ngIf= "brd._id != glob_id">{{brd.catname}}</td>
+              <td *ngIf= "brd._id != glob_id">{{brd.scatname}}</td>
+              <td *ngIf= "brd._id != glob_id">{{brd.sscatname}}</td>
+              <td *ngIf= "brd._id != glob_id">{{brd.brand_name}}</td>
+              <td *ngIf= "brd._id != glob_id">{{brd.active}}</td>
+              <td *ngIf= "brd._id != glob_id">
+                <input type="button" value="Edit" class="btn btn-info" (click)="editFun(brd)"> &nbsp;&nbsp;
+                <input type="button" value="Delete"  class="btn btn-danger"  (click)="deleteFun(brd._id)">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="pno=$event"></pagination-controls>
+        <ng-template #temp>
+          <td>{{glob_id}}</td>
+          <td>
+            <select [(ngModel)]="cid1" class="form-control" (change)="updsubcat()">
+              <option *ngFor="let cat of catdata" value="{{cat._id}}">{{cat.catname}}</option>
+            </select>
+          </td>
+          <td>
+            <select [(ngModel)]="sid1" class="form-control" (change)="updssubcat()">
+              <option *ngFor="let scat of subrec" value="{{scat._id}}">{{scat.scatname}}</option>
+            </select>
+          </td>
+          <td>
+            <select [(ngModel)]="ssid1" class="form-control">
+              <option *ngFor="let sscat of ssubrec" value="{{sscat._id}}">{{sscat.sscatname}}</option>
+            </select>
+          </td>
+          <td><input class="form-control" [(ngModel)]="bname1"></td>
+          <td>{{active}}</td>
+          <td>
+              <input type="button" value="Save" class="btn btn-success" (click)="saveFun()"> &nbsp;&nbsp;
+              <input type="button" value="Cancel"  class="btn btn-warning"  (click)="glob_id=0">
+          </td>
+        </ng-template>
+      
+      
+    </div>
+    
+    

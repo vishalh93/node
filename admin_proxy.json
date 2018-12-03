@@ -1,0 +1,7 @@
+{
+        "/catapi/":{ "target": "http://localhost:1234"},
+        "/subapi/":{"target":"http://localhost:1234"},
+        "/subsubapi/*":{"target":"http://localhost:1234"},
+        "/brandapi/*":{"target":"http://localhost:1234"},
+        "/productapi/*":{"target":"http://localhost:1234"}
+}
